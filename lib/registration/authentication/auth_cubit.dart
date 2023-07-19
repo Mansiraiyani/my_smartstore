@@ -50,7 +50,7 @@ class AuthCubit extends Cubit<Authstate>{
           newstate=AuthenticationFailed("please check your internet connection !");
           emit(newstate);
         }else{
-          newstate = AuthenticationFailed(error.message); //error
+          newstate = AuthenticationFailed(error.message!); //error
           emit(newstate);
         }
       }
