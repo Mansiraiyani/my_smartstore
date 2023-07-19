@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_smartstore/registration/login/login_cubit.dart';
 import 'package:my_smartstore/registration/otp/otp_cubit.dart';
 import 'package:my_smartstore/registration/sign_up/signup_cubit.dart';
 import 'package:my_smartstore/registration/sign_up/signup_state.dart';
@@ -77,7 +78,7 @@ class SignUpScreen extends StatelessWidget {
                         height: 48,),
                       TextButton(onPressed: (){
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context)=>LoginScreen())
+                          MaterialPageRoute(builder: (context)=>BlocProvider<LoginCubit>(create:(_)=>LoginCubit(),child: LoginScreen()))
                         );
 
                       }, child: Text('Already have anaccount?Login'))
@@ -97,7 +98,7 @@ class SignUpScreen extends StatelessWidget {
     return TextFormField(
       enabled: enableFrom,
       validator: (value){
-        if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        if(!RegExp(EMAIL_REGEX)
             .hasMatch(value!)){
           return "Please enter a valid Email Address";
         }

@@ -14,7 +14,7 @@ class OtpRepository{
       'phone':phone,
       'email':email,
       'password':password,
-      'name':name,
+      'fullname':name,
     });
     return response;
   }

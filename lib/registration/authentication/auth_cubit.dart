@@ -50,13 +50,21 @@ class AuthCubit extends Cubit<Authstate>{
           newstate=AuthenticationFailed("please check your internet connection !");
           emit(newstate);
         }else{
-          newstate = AuthenticationFailed(error.message); //error
+          newstate = AuthenticationFailed(error.message!); //error
           emit(newstate);
         }
       }
     }
     return newstate;
   }
+
+  void loggedIn(String tokenvlaue){
+    emit(Authenticating());
+    token = tokenvlaue;
+    _setToken(token).
+    then((value) => _fetchUserData());
+  }
+
   Future<Authstate> removeToken()async{
     Authstate newstate;
     token = '';

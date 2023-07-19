@@ -20,7 +20,7 @@ class OtpCubit extends Cubit<OtpState>{
         if (error.type == DioExceptionType) {
           emit(OtpVerificationFailed("please check your internet connection"));
         }else {
-          emit(OtpVerificationFailed(error.message));//error
+          emit(OtpVerificationFailed(error.message!));//error
         }
       }
 
@@ -38,7 +38,7 @@ void _createAccount(email,phone,name,password){
         if (error.type == DioExceptionType) {
           emit(OtpVerificationFailed("please check your internet connection"));
         }else {
-          emit(OtpVerificationFailed(error.message));//error
+          emit(OtpVerificationFailed(error.message!));//error
         }
       }
 

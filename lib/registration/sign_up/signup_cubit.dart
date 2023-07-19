@@ -17,7 +17,7 @@ class SignUpCubit extends Cubit<SignUpState>{
         if (error.type == DioExceptionType) {
           emit(SignUpFailed("please check your internet connection"));
         }else {
-          emit(SignUpFailed(error.message));//error
+          emit(SignUpFailed(error.message!));//error
         }
       }
     });

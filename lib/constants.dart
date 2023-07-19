@@ -8,7 +8,7 @@ const BASE_URL = "$HOST_URL/api";
 const UNAUTHENTICATED_USER = 'unauthenticated_user';
 
 
-
+const EMAIL_REGEX = (r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 //THEME COLOR
 const Map<int,Color> color = {
   50:Color.fromRGBO(28, 122, 219, .1),
