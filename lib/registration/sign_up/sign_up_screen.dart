@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_smartstore/registration/otp/otp_cubit.dart';
 import 'package:my_smartstore/registration/sign_up/signup_cubit.dart';
 import 'package:my_smartstore/registration/sign_up/signup_state.dart';
 
@@ -30,7 +31,7 @@ class SignUpScreen extends StatelessWidget {
                 listener:(context,state) {
                   if(state is SignUpSuccess){
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context)=>OtpScreen())
+                      MaterialPageRoute(builder: (context)=>BlocProvider<OtpCubit>(create:(_)=>OtpCubit(),child: OtpScreen(_email,_phone,_name,_password)))
                     );
                   }
                   if(state is SignUpFailed){
