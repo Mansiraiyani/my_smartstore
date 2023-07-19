@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,7 +9,6 @@ import '../../constants.dart';
 
 class SignUpScreen extends StatelessWidget {
 
-  final formkey = GlobalKey<FormState>();
   late String _email;
   late String _name;
   late String _phone;
@@ -23,51 +20,35 @@ class SignUpScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Form(
-              key: formkey,
-              child: BlocConsumer<SignUpCubit,SignUpState>(
-                listener:(context,state) {
+          child: Form(
+            child: BlocConsumer<SignUpCubit,SignUpState>(
+              listener:(context,state) {
 
-                },
-                builder:(context,state){
-                  return Column(
-                    children: [
-                      SizedBox(height: 28,),
-                      Image.asset('assets/images/logo.png',height: 100,),
-                      SizedBox(height: 48,),
-                      _emailField(!(state is SignUpSubmitting),state is SignUpFailed?state.message:null),
-                      SizedBox(height: 24,),
-                      _phoneField(!(state is SignUpSubmitting),state is SignUpFailed?state.message:null),
-                      SizedBox(height: 24,),
-                      _nameField(!(state is SignUpSubmitting)),
-                      SizedBox(height: 24,),
-                      _passwordField(!(state is SignUpSubmitting)),
-                      SizedBox(height: 24,),
-                      _confirmpasswordField(!(state is SignUpSubmitting)),
-                      SizedBox(height: 28,),
-                      if(state is SignUpSubmitting)
-                        CircularProgressIndicator(),
-                      SizedBox(height: 28,),
-                      ElevatedButton(style: ButtonStyle(shape: MaterialStateProperty.all<RoundedRectangleBorder>
-                        (RoundedRectangleBorder(borderRadius:BorderRadius.circular(8)
-                      ),
-                      ),
-                      elevation: MaterialStateProperty.all(0),
-                      fixedSize: MaterialStateProperty.all(Size
-                        (double.maxFinite, 60))
-                      ),
-                          onPressed: (state is SignUpSubmitting)?null:(){
-                        if(formkey.currentState!.validate()){
-                          BlocProvider.of<SignUpCubit>(context).requestotp(_email, _phone);
-                        }
-                      },
-                          child:Text('Create Account') )
-                    ],
-                  );
-                },
-              ),
+              },
+              builder:(context,state){
+                return Column(
+                  children: [
+                    SizedBox(height: 28,),
+                    Image.asset('assets/images/logo.png',height: 100,),
+                    SizedBox(height: 48,),
+                    _emailField(!(state is SignUpSubmitting),state is SignUpFailed?state.message:null),
+                    SizedBox(height: 24,),
+                    _phoneField(!(state is SignUpSubmitting),state is SignUpFailed?state.message:null),
+                    SizedBox(height: 24,),
+                    _nameField(!(state is SignUpSubmitting)),
+                    SizedBox(height: 24,),
+                    _passwordField(!(state is SignUpSubmitting)),
+                    SizedBox(height: 24,),
+                    _confirmpasswordField(!(state is SignUpSubmitting)),
+                    SizedBox(height: 28,),
+                    if(state is SignUpSubmitting)
+                      CircularProgressIndicator(),
+                    SizedBox(height: 28,),
+                    ElevatedButton(onPressed: (state is SignUpSubmitting)?null:(){},
+                        child:Text('Create Account') )
+                  ],
+                );
+              },
             ),
           ),
         ),
