@@ -17,7 +17,7 @@ class SignUpScreen extends StatelessWidget {
   late String _email;
   late String _name;
   late String _phone;
-  late String _password;
+   String? _password;
   late String _confirmpassword;
 
   @override
@@ -28,11 +28,12 @@ class SignUpScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Form(
+              key: formkey,
               child: BlocConsumer<SignUpCubit,SignUpState>(
                 listener:(context,state) {
                   if(state is SignUpSuccess){
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context)=>BlocProvider<OtpCubit>(create:(_)=>OtpCubit(),child: OtpScreen(_email,_phone,_name,_password)))
+                      MaterialPageRoute(builder: (context)=>BlocProvider<OtpCubit>(create:(_)=>OtpCubit(),child: OtpScreen(_email,_phone,_name,_password!)))
                     );
                   }
                   if(state is SignUpFailed){
