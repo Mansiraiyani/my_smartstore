@@ -7,20 +7,25 @@ class SignUpCubit extends Cubit<SignUpState>{
   SignUpCubit():super(SignUpInitial());
   final SignUpRepository _repository = SignUpRepository();
   void requestotp(email,phone){
-    emit(SignUpSubmitting());
-    _repository.requestotp(email, phone).then((response) => emit(SignUpSuccess())).
-    catchError((value){
-      DioException error = value;
-      if(error.response != null) {
-        emit(SignUpFailed(error.response!.data));
-      }else {
-        if (error.type == DioExceptionType) {
-          emit(SignUpFailed("please check your internet connection"));
-        }else {
-          emit(SignUpFailed(error.message!));//error
-        }
+
+try {
+  emit(SignUpSubmitting());
+  _repository.requestotp(email, phone);
+  emit(SignUpSuccess());
+}
+    catch(value){
+  print(value);
+    //   DioException error = value as DioException;
+    //   if(error.response != null) {
+    //     emit(SignUpFailed(error.response!.data));
+    //   }else {
+    //     if (error.type == DioExceptionType) {
+    //       emit(SignUpFailed("please check your internet connection"));
+    //     }else {
+    //       emit(SignUpFailed(error.message!));//error
+    //     }
       }
-    });
+    // }
   }
 
 }
