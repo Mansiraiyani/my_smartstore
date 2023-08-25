@@ -2,9 +2,12 @@
 
 import 'package:flutter/material.dart';
 
-//const DOMAIN_URL = "http://192.168.75.233:8000";
-//const HOST_URL = "http://192.168.79.233:8000";
-const BASE_URL = "http://192.168.79.233:8000/api";
+// const DOMAIN_URL = "http://192.168.75.233:8000";
+const HOST_URL = "http://192.168.7.233:8000";
+const BASE_URL = "http://192.168.7.233:8000/api";
+//const BASE_URL = "http://192.168.7.233:8000/api";
+//const BASE_URL = "http://192.168.51.233:8000/api";
+
 // const BASE_URL = "$HOST_URL/api";
 const UNAUTHENTICATED_USER = 'unauthenticated_user';
 

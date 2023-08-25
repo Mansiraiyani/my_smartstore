@@ -14,18 +14,18 @@ try {
   emit(SignUpSuccess());
 }
     catch(value){
-  print(value);
-    //   DioException error = value as DioException;
-    //   if(error.response != null) {
-    //     emit(SignUpFailed(error.response!.data));
-    //   }else {
-    //     if (error.type == DioExceptionType) {
-    //       emit(SignUpFailed("please check your internet connection"));
-    //     }else {
-    //       emit(SignUpFailed(error.message!));//error
-    //     }
+  // print(value);
+      DioException error = value as DioException;
+      if(error.response != null) {
+        emit(SignUpFailed(error.response!.data));
+      }else {
+        if (error.type == DioExceptionType) {
+          emit(SignUpFailed("please check your internet connection"));
+        }else {
+          emit(SignUpFailed(error.message!));//error
+        }
       }
-    // }
+     }
   }
 
 }

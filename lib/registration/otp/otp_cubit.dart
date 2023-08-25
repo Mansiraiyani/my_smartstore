@@ -7,17 +7,16 @@ import 'otp_repository.dart';
 class OtpCubit extends Cubit<OtpState> {
   OtpCubit() : super(OtpInitial());
   OtpRepository otpRepository = OtpRepository();
-  void verifyotp(
-      {required String phone,
-      required String otp,
-      required String email,
-      required String password,
-      required String name}) {
+  void verifyOtp(
+      {
+        required String email,
+        required String phone,
+        required String otp,
+        required String password,
+        required String name}) {
     emit(OtpVerifying());
-     otpRepository.verifyotp(phone, otp).then((response) {
+     otpRepository.verifyOtp(phone, otp).then((response) {
       _createAccount(email, phone, name, password);
-
-      
     }).catchError((value) {
       DioException error = value;
       if (error.response != null) {

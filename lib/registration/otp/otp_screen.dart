@@ -39,24 +39,20 @@ class _OtpScreenState extends State<OtpScreen> {
               key: widget.formKey,
               child:
                   BlocConsumer<OtpCubit, OtpState>(listener: (context, state) {
+                if (state is OtpVerificationFailed) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(state.message),
+                    backgroundColor: Colors.red,
+                  ));
+                }
                 if (state is OtpVerified) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HomeScreen(),
-                      ));
                   if (widget.onlyverify) {
                     //todo only verify
+                    Navigator.pop(context, true);
                   } else {
                     BlocProvider.of<AuthCubit>(context).loggedIn(state.token);
                     Navigator.pop(context);
                   }
-                }
-                if (state is OtpVerificationFailed) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(state.message!),
-                    backgroundColor: Colors.red,
-                  ));
                 }
               }, builder: (context, state) {
                 return Column(
@@ -65,39 +61,40 @@ class _OtpScreenState extends State<OtpScreen> {
                       "assets/images/otp.png",
                       height: 100,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 24,
                     ),
-                    Text(
+                    const Text(
                       'Phone Verification',
                       style: TextStyle(fontSize: 24),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 24,
                     ),
-                    Text(
+                    const Text(
                         'A verification code has been successfully sent your phone no.'),
-                    SizedBox(
+                    const SizedBox(
                       height: 48,
                     ),
                     _otpField(!(state is OtpVerifying),
                         state is OtpVerificationFailed ? state.message : null),
-                    SizedBox(
+                    const SizedBox(
                       height: 24,
                     ),
                     TextButton(
-                        child: Text(widget.time != 0
-                            ? "Wait for ${widget.time} seconds to resend "
-                            : 'Resend'),
                         onPressed: widget.time != 0
                             ? null
                             : () {
                                 BlocProvider.of<OtpCubit>(context)
                                     .resendOtp(phone: widget._phone);
                                 startTimer();
-                              }),
-                    if (state is OtpVerifying) CircularProgressIndicator(),
-                    SizedBox(
+                              },
+                        child: Text(widget.time != 0
+                            ? "Wait for ${widget.time} seconds to resend "
+                            : 'Resend')),
+                    if (state is OtpVerifying)
+                      const CircularProgressIndicator(),
+                    const SizedBox(
                       height: 28,
                     ),
                     ElevatedButton(
@@ -109,7 +106,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             ),
                             elevation: MaterialStateProperty.all(0),
                             fixedSize: MaterialStateProperty.all(
-                                Size(double.maxFinite, 50))),
+                                const Size(double.maxFinite, 50))),
                         onPressed: state is OtpVerifying
                             ? null
                             : () {
@@ -117,16 +114,17 @@ class _OtpScreenState extends State<OtpScreen> {
                                   if (widget.onlyverify) {
                                   } else {
                                     BlocProvider.of<OtpCubit>(context)
-                                        .verifyotp(
-                                            email: widget._email,
-                                            name: widget._name,
-                                            password: widget._password,
-                                            phone: widget._phone,
-                                            otp: widget._otp);
+                                        .verifyOtp(
+                                      email: widget._email,
+                                      name: widget._name,
+                                      password: widget._password,
+                                      phone: widget._phone,
+                                      otp: widget._otp,
+                                    );
                                   }
                                 }
                               },
-                        child: Text('Verify')),
+                        child: const Text('Verify')),
                   ],
                 );
               }),
@@ -146,19 +144,21 @@ class _OtpScreenState extends State<OtpScreen> {
           return "Invalid OTP";
         }
         widget._otp = value;
+        return null;
       },
-      keyboardType: TextInputType.emailAddress,
-      style: TextStyle(fontSize: 14),
+      keyboardType: TextInputType.number,
+      style: const TextStyle(fontSize: 14),
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       decoration: InputDecoration(
           enabledBorder: ENABLED_BORDER,
-          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           focusedBorder: FOCUSED_BORDER,
           errorBorder: ERROR_BORDER,
           focusedErrorBorder: FOCUSED_BORDER,
           errorText: error,
-          errorStyle: TextStyle(height: 1),
-          hintText: "Enter 6 digit varification code",
+          errorStyle: const TextStyle(height: 1),
+          hintText: "Enter 6 digit verification code",
           labelText: "Verification Otp : ",
           suffixIcon: const Icon(Icons.sms)),
     );
@@ -166,7 +166,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   void startTimer() {
     widget.time = 60;
-    const onesec = const Duration(seconds: 1);
+    const onesec = Duration(seconds: 1);
     widget.timer = Timer.periodic(onesec, (timer) {
       if (widget.time == 0) {
         timer.cancel();
